@@ -20,3 +20,15 @@ First create a `.env` file with the following:
 ```ini
 SEGMENT_WRITE_KEY=your-source-write-key
 ```
+
+Install all required packages:
+
+```sh
+go get .
+```
+
+Then run it:
+
+```sh
+go run .
+```
