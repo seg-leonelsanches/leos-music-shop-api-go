@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/segmentio/analytics-go"
 )
 
 type keyboard struct {
@@ -20,6 +21,10 @@ var keyboards = []keyboard{
 }
 
 func getKeyboards(c *gin.Context) {
+	client.Enqueue(analytics.Track{
+		UserId: "test-user",
+		Event:  "All Keyboards Listed",
+	})
 	c.IndentedJSON(http.StatusOK, keyboards)
 }
 
