@@ -30,6 +30,10 @@ func main() {
 	router.GET("/keyboards/:id", getKeyboardByID)
 	router.POST("/keyboards", postKeyboards)
 
+	router.GET("/manufacturers", getManufacturers)
+	router.GET("/manufacturers/:id", getManufacturerByID)
+	router.POST("/manufacturers", postManufacturers)
+
 	server := &http.Server{
 		Addr:    ":3001",
 		Handler: router,

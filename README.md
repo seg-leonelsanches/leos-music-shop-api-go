@@ -3,3 +3,20 @@
 This is another very cool API for Leo's Music Shop.
 
 For now this API only sells keyboards and pianos.
+
+## Motivation
+
+This can help in Golang integrations with our clients. 
+
+## Architecture
+
+- [Gin](https://github.com/gin-gonic/gin)
+- [Godotenv](https://github.com/joho/godotenv)
+
+## Running
+
+First create a `.env` file with the following:
+
+```ini
+SEGMENT_WRITE_KEY=your-source-write-key
+```
