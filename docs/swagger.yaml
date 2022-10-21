@@ -1,0 +1,17 @@
+info:
+  contact: {}
+paths:
+  /keyboards:
+    get:
+      consumes:
+      - application/json
+      description: get all keyboards
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: get all keyboards
+      tags:
+      - example
+swagger: "2.0"

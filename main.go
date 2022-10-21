@@ -9,10 +9,13 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"github.com/segmentio/analytics-go"
+	"github.com/swaggo/files"       // swagger embed files
+	"github.com/swaggo/gin-swagger" // gin-swagger middleware
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 
 	"segment/leos-music-shop-api-go/data"
+	"segment/leos-music-shop-api-go/docs"
 	"segment/leos-music-shop-api-go/routes"
 	"segment/leos-music-shop-api-go/segment"
 )
@@ -36,13 +39,28 @@ func main() {
 	data.Migrate()
 
 	router := gin.Default()
-	router.GET("/keyboards", routes.GetKeyboards)
-	router.GET("/keyboards/:id", routes.GetKeyboardByID)
-	router.POST("/keyboards", routes.PostKeyboard)
+	docs.SwaggerInfo.BasePath = ""
+	keyboardsGroup := router.Group("/keyboards")
+	{
+		keyboardsGroup.GET(":id", routes.GetKeyboardByID)
+		keyboardsGroup.GET("", routes.GetKeyboards)
+		keyboardsGroup.POST("", routes.PostKeyboard)
+		// keyboardsGroup.DELETE(":id", c.DeleteAccount)
+		// keyboardsGroup.PATCH(":id", c.UpdateAccount)
+		// keyboardsGroup.POST(":id/images", c.UploadAccountImage)
+	}
 
-	router.GET("/manufacturers", routes.GetManufacturers)
-	router.GET("/manufacturers/:id", routes.GetManufacturerByID)
-	router.POST("/manufacturers", routes.PostManufacturer)
+	manufacturersGroup := router.Group("/manufacturers")
+	{
+		manufacturersGroup.GET(":id", routes.GetManufacturerByID)
+		manufacturersGroup.GET("", routes.GetManufacturers)
+		manufacturersGroup.POST("", routes.PostManufacturer)
+		// manufacturersGroup.DELETE(":id", c.DeleteAccount)
+		// manufacturersGroup.PATCH(":id", c.UpdateAccount)
+		// manufacturersGroup.POST(":id/images", c.UploadAccountImage)
+	}
+
+	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	server := &http.Server{
 		Addr:    ":3001",

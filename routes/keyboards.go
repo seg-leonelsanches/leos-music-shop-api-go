@@ -13,6 +13,15 @@ import (
 
 var keyboards []models.Keyboard
 
+// GetKeyboards godoc
+// @Summary get all keyboards
+// @Schemes
+// @Description get all keyboards
+// @Tags example
+// @Accept json
+// @Produce json
+// @Success 200
+// @Router /keyboards [get]
 func GetKeyboards(c *gin.Context) {
 	segment.SegmentClient.Enqueue(analytics.Track{
 		UserId: "test-user",
