@@ -11,10 +11,11 @@ import (
 	"github.com/segmentio/analytics-go"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
-)
 
-var client analytics.Client
-var db *gorm.DB
+	"segment/leos-music-shop-api-go/data"
+	"segment/leos-music-shop-api-go/routes"
+	"segment/leos-music-shop-api-go/segment"
+)
 
 func init() {
 
@@ -24,39 +25,24 @@ func init() {
 		log.Fatal("Error loading .env file")
 	}
 
-	client = analytics.New(os.Getenv("SEGMENT_WRITE_KEY"))
-	db, err = gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
+	segment.SegmentClient = analytics.New(os.Getenv("SEGMENT_WRITE_KEY"))
+	data.Db, err = gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect database")
 	}
 }
 
 func main() {
-
-	// Migrate the schema
-	db.AutoMigrate(&keyboard{})
-	db.AutoMigrate(&manufacturer{})
-
-	// Create
-	db.Create([]keyboard{
-		{Id: "1", Model: "Williams Allegro III", Manufacturer: "Williams", Price: 349.99},
-		{Id: "2", Model: "Yamaha P-125", Manufacturer: "Yamaha", Price: 699.99},
-		{Id: "3", Model: "Casio CDP-S100", Manufacturer: "Casio", Price: 449.99},
-	})
-	db.Create([]manufacturer{
-		{Id: "1", Name: "Williams"},
-		{Id: "2", Name: "Yamaha"},
-		{Id: "3", Name: "Casio"},
-	})
+	data.Migrate()
 
 	router := gin.Default()
-	router.GET("/keyboards", getKeyboards)
-	router.GET("/keyboards/:id", getKeyboardByID)
-	router.POST("/keyboards", postKeyboards)
+	router.GET("/keyboards", routes.GetKeyboards)
+	router.GET("/keyboards/:id", routes.GetKeyboardByID)
+	router.POST("/keyboards", routes.PostKeyboard)
 
-	router.GET("/manufacturers", getManufacturers)
-	router.GET("/manufacturers/:id", getManufacturerByID)
-	router.POST("/manufacturers", postManufacturers)
+	router.GET("/manufacturers", routes.GetManufacturers)
+	router.GET("/manufacturers/:id", routes.GetManufacturerByID)
+	router.POST("/manufacturers", routes.PostManufacturer)
 
 	server := &http.Server{
 		Addr:    ":3001",
@@ -83,5 +69,5 @@ func main() {
 	}
 
 	log.Println("Server exiting")
-	defer client.Close()
+	defer segment.SegmentClient.Close()
 }

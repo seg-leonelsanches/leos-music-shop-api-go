@@ -1,30 +1,29 @@
-package main
+package routes
 
 import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"github.com/segmentio/analytics-go"
+
+	"segment/leos-music-shop-api-go/data"
+	"segment/leos-music-shop-api-go/models"
+	"segment/leos-music-shop-api-go/segment"
 )
 
-type manufacturer struct {
-	Id   string `json:"id"`
-	Name string `json:"name"`
-}
+var manufacturers []models.Manufacturer
 
-var manufacturers []manufacturer
-
-func getManufacturers(c *gin.Context) {
-	client.Enqueue(analytics.Track{
+func GetManufacturers(c *gin.Context) {
+	segment.SegmentClient.Enqueue(analytics.Track{
 		UserId: "test-user",
 		Event:  "All Manufacturers Listed",
 	})
-	db.Find(&manufacturers)
+	data.Db.Find(&manufacturers)
 	c.IndentedJSON(http.StatusOK, manufacturers)
 }
 
-func postManufacturers(c *gin.Context) {
-	var newManufacturer manufacturer
+func PostManufacturer(c *gin.Context) {
+	var newManufacturer models.Manufacturer
 
 	if err := c.BindJSON(&newManufacturer); err != nil {
 		return
@@ -34,7 +33,7 @@ func postManufacturers(c *gin.Context) {
 	c.IndentedJSON(http.StatusCreated, newManufacturer)
 }
 
-func getManufacturerByID(c *gin.Context) {
+func GetManufacturerByID(c *gin.Context) {
 	id := c.Param("id")
 
 	for _, a := range manufacturers {
@@ -43,5 +42,5 @@ func getManufacturerByID(c *gin.Context) {
 			return
 		}
 	}
-	c.IndentedJSON(http.StatusNotFound, gin.H{"message": "manufacturer not found"})
+	c.IndentedJSON(http.StatusNotFound, gin.H{"message": "Manufacturer not found"})
 }
