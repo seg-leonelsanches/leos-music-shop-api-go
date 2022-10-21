@@ -19,6 +19,7 @@ func getManufacturers(c *gin.Context) {
 		UserId: "test-user",
 		Event:  "All Manufacturers Listed",
 	})
+	db.Find(&manufacturers)
 	c.IndentedJSON(http.StatusOK, manufacturers)
 }
 

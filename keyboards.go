@@ -21,7 +21,8 @@ func getKeyboards(c *gin.Context) {
 		UserId: "test-user",
 		Event:  "All Keyboards Listed",
 	})
-	c.IndentedJSON(http.StatusOK, db.Find(&keyboards))
+	db.Find(&keyboards)
+	c.IndentedJSON(http.StatusOK, keyboards)
 }
 
 func postKeyboards(c *gin.Context) {

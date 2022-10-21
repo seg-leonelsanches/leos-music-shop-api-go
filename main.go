@@ -25,13 +25,13 @@ func init() {
 	}
 
 	client = analytics.New(os.Getenv("SEGMENT_WRITE_KEY"))
-}
-
-func main() {
-	db, err := gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
+	db, err = gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect database")
 	}
+}
+
+func main() {
 
 	// Migrate the schema
 	db.AutoMigrate(&keyboard{})
