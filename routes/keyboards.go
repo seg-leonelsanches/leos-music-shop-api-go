@@ -40,6 +40,7 @@ func GetKeyboards(c *gin.Context) {
 // @Produce json
 // @Success 201
 // @Router /keyboards [post]
+// @Param request body models.Keyboard true "params"
 func PostKeyboard(c *gin.Context) {
 	var newKeyboard models.Keyboard
 
@@ -47,7 +48,7 @@ func PostKeyboard(c *gin.Context) {
 		return
 	}
 
-	keyboards = append(keyboards, newKeyboard)
+	data.Db.Create(&newKeyboard)
 	c.IndentedJSON(http.StatusCreated, newKeyboard)
 }
 

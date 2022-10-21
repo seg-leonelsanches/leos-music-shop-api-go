@@ -40,6 +40,7 @@ func GetManufacturers(c *gin.Context) {
 // @Produce json
 // @Success 201
 // @Router /manufacturers [post]
+// @Param request body models.Manufacturer true "params"
 func PostManufacturer(c *gin.Context) {
 	var newManufacturer models.Manufacturer
 
@@ -47,7 +48,7 @@ func PostManufacturer(c *gin.Context) {
 		return
 	}
 
-	manufacturers = append(manufacturers, newManufacturer)
+	data.Db.Create(&newManufacturer)
 	c.IndentedJSON(http.StatusCreated, newManufacturer)
 }
 

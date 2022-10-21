@@ -47,6 +47,17 @@ const docTemplate = `{
                     "Keyboards"
                 ],
                 "summary": "Creates a new Keyboard",
+                "parameters": [
+                    {
+                        "description": "params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Keyboard"
+                        }
+                    }
+                ],
                 "responses": {
                     "201": {
                         "description": "Created"
@@ -114,6 +125,17 @@ const docTemplate = `{
                     "Manufacturers"
                 ],
                 "summary": "Creates a new Manufacturer",
+                "parameters": [
+                    {
+                        "description": "params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Manufacturer"
+                        }
+                    }
+                ],
                 "responses": {
                     "201": {
                         "description": "Created"
@@ -147,6 +169,36 @@ const docTemplate = `{
                     "200": {
                         "description": "OK"
                     }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.Keyboard": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "manufacturer": {
+                    "type": "string"
+                },
+                "model": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "number"
+                }
+            }
+        },
+        "models.Manufacturer": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
                 }
             }
         }
