@@ -14,10 +14,10 @@ import (
 var keyboards []models.Keyboard
 
 // GetKeyboards godoc
-// @Summary get all keyboards
+// @Summary Gets all keyboards
 // @Schemes
-// @Description get all keyboards
-// @Tags example
+// @Description Gets all keyboards
+// @Tags Keyboards
 // @Accept json
 // @Produce json
 // @Success 200
@@ -31,6 +31,15 @@ func GetKeyboards(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, keyboards)
 }
 
+// PostKeyboard godoc
+// @Summary Creates a new Keyboard
+// @Schemes
+// @Description Creates a new Keyboard
+// @Tags Keyboards
+// @Accept json
+// @Produce json
+// @Success 201
+// @Router /keyboards [post]
 func PostKeyboard(c *gin.Context) {
 	var newKeyboard models.Keyboard
 
@@ -42,14 +51,24 @@ func PostKeyboard(c *gin.Context) {
 	c.IndentedJSON(http.StatusCreated, newKeyboard)
 }
 
+// GetKeyboardByID godoc
+// @Summary Gets a keyboard by id
+// @Schemes
+// @Description Gets a keyboard by id
+// @Tags Keyboards
+// @Accept json
+// @Produce json
+// @Success 200
+// @Router /keyboards/{id} [get]
+// @Param id path int true "Keyboard id"
 func GetKeyboardByID(c *gin.Context) {
 	id := c.Param("id")
 
-	for _, a := range keyboards {
-		if a.Id == id {
-			c.IndentedJSON(http.StatusOK, a)
-			return
-		}
+	var keyboard models.Keyboard
+	result := data.Db.Find(&keyboard, id)
+	if result.RowsAffected > 0 {
+		c.IndentedJSON(http.StatusOK, keyboard)
+		return
 	}
 	c.IndentedJSON(http.StatusNotFound, gin.H{"message": "Keyboard not found"})
 }

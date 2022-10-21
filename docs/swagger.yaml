@@ -5,13 +5,88 @@ paths:
     get:
       consumes:
       - application/json
-      description: get all keyboards
+      description: Gets all keyboards
       produces:
       - application/json
       responses:
         "200":
           description: OK
-      summary: get all keyboards
+      summary: Gets all keyboards
       tags:
-      - example
+      - Keyboards
+    post:
+      consumes:
+      - application/json
+      description: Creates a new Keyboard
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+      summary: Creates a new Keyboard
+      tags:
+      - Keyboards
+  /keyboards/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Gets a keyboard by id
+      parameters:
+      - description: Keyboard id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: Gets a keyboard by id
+      tags:
+      - Keyboards
+  /manufacturers:
+    get:
+      consumes:
+      - application/json
+      description: Gets all manufacturers
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: Gets all manufacturers
+      tags:
+      - Manufacturers
+    post:
+      consumes:
+      - application/json
+      description: Creates a new Manufacturer
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+      summary: Creates a new Manufacturer
+      tags:
+      - Manufacturers
+  /manufacturers/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Gets a manufacturer by id
+      parameters:
+      - description: Manufacturer id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: Gets a manufacturer by id
+      tags:
+      - Manufacturers
 swagger: "2.0"

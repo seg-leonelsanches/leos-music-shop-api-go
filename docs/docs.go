@@ -18,7 +18,7 @@ const docTemplate = `{
     "paths": {
         "/keyboards": {
             "get": {
-                "description": "get all keyboards",
+                "description": "Gets all keyboards",
                 "consumes": [
                     "application/json"
                 ],
@@ -26,9 +26,123 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "example"
+                    "Keyboards"
                 ],
-                "summary": "get all keyboards",
+                "summary": "Gets all keyboards",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "post": {
+                "description": "Creates a new Keyboard",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Keyboards"
+                ],
+                "summary": "Creates a new Keyboard",
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    }
+                }
+            }
+        },
+        "/keyboards/{id}": {
+            "get": {
+                "description": "Gets a keyboard by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Keyboards"
+                ],
+                "summary": "Gets a keyboard by id",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Keyboard id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/manufacturers": {
+            "get": {
+                "description": "Gets all manufacturers",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Manufacturers"
+                ],
+                "summary": "Gets all manufacturers",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "post": {
+                "description": "Creates a new Manufacturer",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Manufacturers"
+                ],
+                "summary": "Creates a new Manufacturer",
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    }
+                }
+            }
+        },
+        "/manufacturers/{id}": {
+            "get": {
+                "description": "Gets a manufacturer by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Manufacturers"
+                ],
+                "summary": "Gets a manufacturer by id",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Manufacturer id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK"
