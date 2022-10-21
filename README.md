@@ -12,6 +12,7 @@ This can help in Golang integrations with our clients.
 
 - [Gin](https://github.com/gin-gonic/gin)
 - [Godotenv](https://github.com/joho/godotenv)
+- [Gorm](https://gorm.io/)
 
 ## Running
 

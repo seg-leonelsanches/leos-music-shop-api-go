@@ -9,6 +9,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"github.com/segmentio/analytics-go"
+	"gorm.io/driver/sqlite"
+	"gorm.io/gorm"
 )
 
 var client analytics.Client
@@ -25,6 +27,17 @@ func init() {
 }
 
 func main() {
+	db, err := gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
+	if err != nil {
+		panic("failed to connect database")
+	}
+
+	// Migrate the schema
+	db.AutoMigrate(&keyboard{})
+
+	// Create
+	db.Create(&keyboard{Id: "1", Model: "Williams Allegro III", Manufacturer: "Williams", Price: 349.99})
+
 	router := gin.Default()
 	router.GET("/keyboards", getKeyboards)
 	router.GET("/keyboards/:id", getKeyboardByID)
