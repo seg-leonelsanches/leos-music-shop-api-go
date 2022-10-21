@@ -14,18 +14,14 @@ type keyboard struct {
 	Price        float64 `json:"price"`
 }
 
-var keyboards = []keyboard{
-	{Id: "1", Model: "Williams Allegro III", Manufacturer: "Williams", Price: 349.99},
-	{Id: "2", Model: "Yamaha P-125", Manufacturer: "Yamaha", Price: 699.99},
-	{Id: "3", Model: "Casio CDP-S100", Manufacturer: "Casio", Price: 449.99},
-}
+var keyboards []keyboard
 
 func getKeyboards(c *gin.Context) {
 	client.Enqueue(analytics.Track{
 		UserId: "test-user",
 		Event:  "All Keyboards Listed",
 	})
-	c.IndentedJSON(http.StatusOK, keyboards)
+	c.IndentedJSON(http.StatusOK, db.Find(&keyboards))
 }
 
 func postKeyboards(c *gin.Context) {

@@ -12,11 +12,7 @@ type manufacturer struct {
 	Name string `json:"name"`
 }
 
-var manufacturers = []manufacturer{
-	{Id: "1", Name: "Williams"},
-	{Id: "2", Name: "Yamaha"},
-	{Id: "3", Name: "Casio"},
-}
+var manufacturers []manufacturer
 
 func getManufacturers(c *gin.Context) {
 	client.Enqueue(analytics.Track{

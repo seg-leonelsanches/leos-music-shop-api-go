@@ -14,6 +14,7 @@ import (
 )
 
 var client analytics.Client
+var db *gorm.DB
 
 func init() {
 
@@ -34,9 +35,19 @@ func main() {
 
 	// Migrate the schema
 	db.AutoMigrate(&keyboard{})
+	db.AutoMigrate(&manufacturer{})
 
 	// Create
-	db.Create(&keyboard{Id: "1", Model: "Williams Allegro III", Manufacturer: "Williams", Price: 349.99})
+	db.Create([]keyboard{
+		{Id: "1", Model: "Williams Allegro III", Manufacturer: "Williams", Price: 349.99},
+		{Id: "2", Model: "Yamaha P-125", Manufacturer: "Yamaha", Price: 699.99},
+		{Id: "3", Model: "Casio CDP-S100", Manufacturer: "Casio", Price: 449.99},
+	})
+	db.Create([]manufacturer{
+		{Id: "1", Name: "Williams"},
+		{Id: "2", Name: "Yamaha"},
+		{Id: "3", Name: "Casio"},
+	})
 
 	router := gin.Default()
 	router.GET("/keyboards", getKeyboards)
